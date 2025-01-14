@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": "deno run -A --watch ./src/main.ts",
+    "prod": "deno run -N ./src/main.ts",
+    "compile": "deno compile -N -o main ./src/main.ts"
+  },
+  "imports": {
+    "hono": "npm:hono"
+  },
+  "nodeModulesDir": "auto"
+}
