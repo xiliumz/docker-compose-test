@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY . /app
 
-RUN yarn
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
 
+RUN yarn
 RUN yarn build
 
 FROM node:22.12.0-alpine

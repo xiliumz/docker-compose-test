@@ -22,6 +22,9 @@ const getCount = async () => {
 function App() {
   const [count, setCount] = useState(0)
 
+
+  console.log('the env is: ',import.meta.env)
+
   const increment = async () => {
     try {
       await incrementCount()
