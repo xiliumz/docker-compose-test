@@ -1,4 +1,5 @@
 import { Handler, Hono } from "hono";
+import { cors } from "hono/cors";
 
 const db = {
   count: 0,
@@ -7,7 +8,7 @@ const db = {
 const incrementCount: Handler = (c) => {
   db.count += 1;
 
-  return c.status(201);
+  return c.body(null, 204);
 };
 
 const getCount: Handler = (c) => {
@@ -20,7 +21,10 @@ dbRoute.post("/increment", incrementCount);
 
 dbRoute.get("/", getCount);
 
+/** Main app */
 const app = new Hono({ strict: false });
+
+app.use("*", cors());
 
 app.route("/db", dbRoute);
 
