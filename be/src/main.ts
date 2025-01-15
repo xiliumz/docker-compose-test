@@ -15,6 +15,10 @@ const getCount: Handler = (c) => {
   return c.json({ count: db.count });
 };
 
+const checkHealth: Handler = (c) => {
+  return c.body(null, 200);
+};
+
 const dbRoute = new Hono();
 
 dbRoute.post("/increment", incrementCount);
@@ -25,6 +29,8 @@ dbRoute.get("/", getCount);
 const app = new Hono({ strict: false });
 
 app.use("*", cors());
+
+app.get("/health", checkHealth);
 
 app.route("/db", dbRoute);
 
