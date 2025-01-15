@@ -1,12 +1,45 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+const incrementCount = async () => {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/db/increment`, {method: 'post'})
+
+  if (response.status >= 400) alert('Failed')
+  }
+
+const getCount = async () => {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/db`)
+
+  if (response.status >= 400) alert('Failed')
+  
+  const data = await response.json()
+
+  return data.count
+}
+
 function App() {
   const [count, setCount] = useState(0)
 
-  console.log(import.meta.env)
+  const increment = async () => {
+    try {
+      await incrementCount()
+      const count = await getCount()
+
+      setCount(count)
+    } catch {
+      alert('Failed')
+    }
+  }
+
+  useEffect(() => {
+    (async () => {
+      const count = await getCount()
+
+      setCount(count)
+    })()
+  }, [])
 
   return (
     <>
@@ -20,7 +53,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={increment}>
           count is {count}
         </button>
         <p>
