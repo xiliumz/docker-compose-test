@@ -1,5 +1,6 @@
 import { Handler, Hono } from "hono";
 import { cors } from "hono/cors";
+import {logger} from "hono/logger"
 
 const db = {
   count: 0,
@@ -28,7 +29,9 @@ dbRoute.get("/", getCount);
 /** Main app */
 const app = new Hono({ strict: false });
 
-app.use("*", cors());
+app.use(cors());
+
+app.use(logger());
 
 app.get("/health", checkHealth);
 
