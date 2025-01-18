@@ -4,13 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 const incrementCount = async () => {
-  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/db/increment`, {method: 'post'})
+  const response = await fetch(`api/db/increment`, {method: 'post'})
 
   if (response.status >= 400) alert('Failed')
   }
 
 const getCount = async () => {
-  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/db`)
+  const response = await fetch(`api/db`)
 
   if (response.status >= 400) alert('Failed')
   

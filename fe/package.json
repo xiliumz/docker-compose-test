@@ -7,10 +7,12 @@
     "node": "22.12.0"
   },
   "scripts": {
+    "clean": "rm -rf ./dist",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "serve -d ./dist"
   },
   "dependencies": {
     "react": "^18.3.1",

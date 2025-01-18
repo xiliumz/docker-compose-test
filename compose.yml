@@ -3,28 +3,12 @@ services:
     build:
       context: ./be
       dockerfile: Dockerfile
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   frontend:
     build:
       context: ./fe
       dockerfile: Dockerfile
-      args:
-        VITE_BACKEND_URL: http://backend:8000
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
-      backend:
-        condition: service_healthy
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - backend

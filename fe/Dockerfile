@@ -1,23 +1,22 @@
+# Stage 1: Build the React app
 FROM node:22.12.0-alpine AS builder
 
 WORKDIR /app
 
 COPY . /app
 
-ARG VITE_BACKEND_URL
-ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
-
-RUN yarn
+RUN yarn install
 RUN yarn build
 
-FROM node:22.12.0-alpine
+# Stage 2: Serve the app with Nginx
+FROM nginx:1.21-alpine
 
-RUN npm i -g serve
+# Copy the build output to Nginx's HTML directory
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-WORKDIR /app
+# Copy the Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/dist /app
+EXPOSE 80
 
-EXPOSE 3000
-
-CMD ["serve", "."]
+CMD ["nginx", "-g", "daemon off;"]
